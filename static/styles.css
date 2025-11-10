@@ -1,0 +1,577 @@
+/* Secret Santa App - Mature Professional Design */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+:root {
+    --primary-red: #B91C1C;
+    --primary-green: #166534;
+    --accent-gold: #D97706;
+    --dark-red: #7F1D1D;
+    --dark-green: #14532D;
+    --neutral-50: #FAFAFA;
+    --neutral-100: #F5F5F5;
+    --neutral-200: #E5E5E5;
+    --neutral-600: #525252;
+    --neutral-700: #404040;
+    --neutral-800: #262626;
+    --neutral-900: #171717;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #E2E8F0 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    color: var(--neutral-800);
+    line-height: 1.6;
+}
+
+/* Subtle animated background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(185, 28, 28, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(22, 101, 52, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Professional Card Design */
+.glow-card {
+    background: #FFFFFF;
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.glow-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* Professional Button Styles */
+.btn-christmas-red {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    color: white;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+
+.btn-christmas-red::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.btn-christmas-red:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-christmas-red:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(185, 28, 28, 0.4);
+}
+
+.btn-christmas-red:active {
+    transform: translateY(0);
+}
+
+.btn-christmas-green {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    color: white;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+
+.btn-christmas-green:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(22, 101, 52, 0.4);
+}
+
+.btn-christmas-gold {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #B45309 100%);
+    color: white;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 15px;
+    letter-spacing: 0.3px;
+}
+
+.btn-christmas-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+}
+
+/* Professional Input Styles */
+.christmas-input {
+    background: #FFFFFF;
+    border: 2px solid var(--neutral-200);
+    border-radius: 10px;
+    padding: 14px 18px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    color: var(--neutral-900);
+    width: 100%;
+}
+
+.christmas-input:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.15);
+    background: #FFFFFF;
+}
+
+.christmas-input::placeholder {
+    color: var(--neutral-600);
+}
+
+/* Elegant Title Styles */
+.christmas-title {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.5px;
+}
+
+/* Refined Card Styles */
+.christmas-card-red {
+    background: linear-gradient(135deg, rgba(185, 28, 28, 0.08) 0%, rgba(127, 29, 29, 0.05) 100%);
+    border: 1px solid rgba(185, 28, 28, 0.2);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(185, 28, 28, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.christmas-card-green {
+    background: linear-gradient(135deg, rgba(22, 101, 52, 0.08) 0%, rgba(20, 83, 45, 0.05) 100%);
+    border: 1px solid rgba(22, 101, 52, 0.2);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(22, 101, 52, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.christmas-card-gold {
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(180, 83, 9, 0.05) 100%);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(217, 119, 6, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Subtle Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Professional Table Styles */
+.christmas-table {
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--neutral-200);
+}
+
+.christmas-table thead {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+    color: white;
+}
+
+.christmas-table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+}
+
+.christmas-table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--neutral-100);
+}
+
+.christmas-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.christmas-table tbody tr:hover {
+    background: rgba(185, 28, 28, 0.05);
+}
+
+/* Professional Badge Styles */
+.badge-admin {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #B45309 100%);
+    color: white;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.badge-user {
+    background: linear-gradient(135deg, var(--neutral-200) 0%, var(--neutral-300) 100%);
+    color: var(--neutral-700);
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+/* Status Badges */
+.badge-paired {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: white;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.badge-unpaired {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: white;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .glow-card {
+        margin: 10px;
+        padding: 24px;
+    }
+    
+    .christmas-title {
+        font-size: 2rem;
+    }
+}
+
+/* Loading States */
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--primary-red);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Professional Divider */
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 32px 0;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--neutral-200);
+}
+
+.divider span {
+    position: relative;
+    background: #FFFFFF;
+    padding: 0 16px;
+    color: var(--neutral-700);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Section Headers */
+.section-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--neutral-800);
+    margin-bottom: 16px;
+    letter-spacing: -0.2px;
+}
+
+/* Professional Alert Styles */
+.alert {
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-error {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #991B1B;
+}
+
+.alert-success {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #166534;
+}
+
+/* Smooth Transitions */
+* {
+    transition-property: color, background-color, border-color, transform, box-shadow;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+/* Snowflakes Animation - Only for login/registration page */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    animation: fall linear infinite;
+    opacity: 0.7;
+    user-select: none;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(100vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Christmas Lights */
+.christmas-lights {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.christmas-light {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+    animation: twinkle 1.5s ease-in-out infinite;
+}
+
+.christmas-light::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.christmas-light.red {
+    background: #ff0000;
+    color: #ff0000;
+}
+
+.christmas-light.green {
+    background: #00ff00;
+    color: #00ff00;
+}
+
+.christmas-light.blue {
+    background: #0080ff;
+    color: #0080ff;
+}
+
+.christmas-light.yellow {
+    background: #ffff00;
+    color: #ffff00;
+}
+
+.christmas-light.orange {
+    background: #ff8000;
+    color: #ff8000;
+}
+
+.christmas-light.purple {
+    background: #8000ff;
+    color: #8000ff;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Gift Boxes */
+.gift-box {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    font-size: 2rem;
+    animation: floatBox 6s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.gift-box::before {
+    content: '🎁';
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes floatBox {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-15px) rotate(3deg);
+    }
+}
+
+/* Decorative Christmas Elements */
+.christmas-decoration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.christmas-decoration.ornament {
+    font-size: 1.5rem;
+    animation: swing 4s ease-in-out infinite;
+}
+
+.christmas-decoration.star {
+    font-size: 2rem;
+    animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+}
