@@ -18,11 +18,13 @@ RUN apt-get update && apt-get install -y \
 
 # Copy project files
 COPY pyproject.toml ./
-COPY . .
 
-# Install Python dependencies
-RUN pip install --upgrade pip && \
-    pip install -e .
+# Install build tools and Python dependencies
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir fastapi "uvicorn[standard]" sqlalchemy jinja2 python-multipart "passlib[bcrypt]" "python-jose[cryptography]" python-dotenv psycopg2-binary
+
+# Copy application code
+COPY . .
 
 # Expose port (Render will set PORT environment variable)
 EXPOSE 8000

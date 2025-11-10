@@ -1,3 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# Explicitly list packages to avoid auto-discovery issues
+packages = ["routers"]
+
+[tool.setuptools.package-data]
+"*" = ["templates/**/*", "static/**/*"]
+
 [project]
 name = "santa-app"
 version = "0.1.0"
