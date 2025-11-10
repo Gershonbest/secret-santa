@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: secret-santa-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: PORT
+        value: 8000
+    healthCheckPath: /
+
