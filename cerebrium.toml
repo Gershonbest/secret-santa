@@ -1,14 +1,36 @@
 [cerebrium.deployment]
 name = "secret-santa-app"
 python_version = "3.11"
+disable_auth = false
+include = ["*"]
+exclude = [".*", "*.db", "*.sqlite", "*.sqlite3", "__pycache__", ".venv", "venv", "tests"]
+shell_commands = []
+pre_build_commands = []
+docker_base_image_url = "debian:bookworm-slim"
+use_uv = true
 
 [cerebrium.runtime.custom]
 port = 8000
-entrypoint = ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+entrypoint = ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+healthcheck_endpoint = "/"
+readycheck_endpoint = "/"
 
 [cerebrium.hardware]
 cpu = 1
 memory = 2.0
+compute = "CPU"
+provider = "aws"
+region = "us-east-1"
+
+[cerebrium.scaling]
+min_replicas = 0
+max_replicas = 3
+replica_concurrency = 10
+response_grace_period = 3600
+cooldown = 1800
+scaling_metric = "concurrency_utilization"
+scaling_target = 100
+roll_out_duration_seconds = 0
 
 [cerebrium.dependencies.pip]
 fastapi = ">=0.104.0"
@@ -22,3 +44,17 @@ python-jose = ">=3.3.0"
 cryptography = ">=41.0.0"
 python-dotenv = ">=1.0.0"
 psycopg2-binary = ">=2.9.0"
+
+[cerebrium.dependencies.apt]
+gcc = "latest"
+postgresql-client = "latest"
+curl = "latest"
+
+[cerebrium.dependencies.conda]
+# Optional conda dependencies
+
+[cerebrium.dependencies.paths]
+# Optional paths to dependency files
+# pip = "requirements.txt"
+# apt = "pkglist.txt"
+# conda = "conda_pkglist.txt"
