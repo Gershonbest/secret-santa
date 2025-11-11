@@ -7,28 +7,34 @@ WORKDIR /app
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    UV_SYSTEM_PYTHON=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy project files
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+# Copy project files (pyproject.toml and uv.lock if it exists)
 COPY pyproject.toml ./
+COPY uv.lock* ./
 
-# Install build tools and Python dependencies
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir fastapi "uvicorn[standard]" sqlalchemy jinja2 python-multipart "passlib[bcrypt]" "python-jose[cryptography]" python-dotenv psycopg2-binary
+# Copy routers package (needed for package build)
+COPY routers/ ./routers/
 
-# Copy application code
+# Install Python dependencies using uv sync (reads from pyproject.toml)
+RUN uv sync --frozen --no-dev
+
+# Copy rest of application code
 COPY . .
 
 # Expose port (Render will set PORT environment variable)
 EXPOSE 8000
 
-# Run the application
-CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Run the application using uv run
+CMD uv run uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
 
